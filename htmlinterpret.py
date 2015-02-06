@@ -1,3 +1,5 @@
+#!/usr/bin/env python 
+
 import graphics
 def interpret (trees):
 	for tree in trees:
@@ -47,3 +49,20 @@ def evalExpression(tree,environment):
 		elif (nodetype == "identifier"):
 			varName = tree[1]
 			return envLookup(environment,varName)
+
+def evalStmts(tree,environment):
+	stmt = tree[0]
+	if (stmt == "assign"):
+		varName = tree[1]
+		right_child = tree[2]
+		new_value = evalExpression(right_child, environment)
+		environmentUpdate(environment, varName, new_value)
+	elif (stmt == "if-then-else"):
+		conditional_exp = tree[1]
+		then_stmts = tree[2]
+		else_stmts = tree[3]
+		if (evalExpression(conditional_exp,environment)):
+			evalStmts(then_stmts,environment)
+		else:
+			evalStmts(else_stmts,environment)
+
