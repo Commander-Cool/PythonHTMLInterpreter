@@ -28,3 +28,22 @@ def evaljsMath(tree):
 			return left_value + right_value
 		elif (operator == "-"):
 			return left_value - right_value
+
+def envLookup(environment,varName):
+	return environment.get(varName,None)
+
+def evalExpression(tree,environment):
+	nodetype = tree[0]
+	if (nodetype =="number"):
+		return int(tree[1])
+	elif (nodetype == "binop"):
+		left_value = evalExpression(tree[2],environment)
+		operator = tree[2]
+		right_value = evalExpression(tree[2],environment)
+		if (operator == "+"):
+			return left_value + right_value
+		elif (operator = "-"):
+			return left_value - right_value
+		elif (nodetype == "identifier"):
+			varName = tree[1]
+			return envLookup(environment,varName)
