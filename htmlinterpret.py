@@ -15,3 +15,16 @@ def interpret (trees):
 				graphics.begintag(tagname,tagargs)
 				interpret(subtrees)
 				graphics.endtag()
+
+def evaljsMath(tree):
+	nodetype = tree[0]
+	if (nodetype == "number"):
+		return int(tree[1])
+	elif (nodetype == "binop"):
+		left_child = tree[1]
+		operator = tree[2]
+		right_child = tree[3]
+		if (operator == "+"):
+			return left_value + right_value
+		elif (operator == "-"):
+			return left_value - right_value
